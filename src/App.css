@@ -1,0 +1,69 @@
+#app {
+    background-color: #d9f6d4;
+}
+#intro {
+    background-color: #f1d4f6;
+    padding: 1.5em;
+}
+#search {
+    padding: 1.5em;
+    background: #f1d4f6;
+    background: linear-gradient(180deg, rgba(241, 212, 246) 0%, rgba(217, 246, 212) 100%);
+}
+#query {
+    display: inline-block;
+    width: 30%;
+}
+.inline-block {
+    display: inline-block;
+}
+.edit {
+    max-width: 50%;
+    padding: 2em;
+}
+.add {
+    max-width: 50%;
+    padding: 2em;
+}
+.back-button {
+    margin: 1em;
+    padding: 0.75em;
+    border-radius: 1em;
+    border: 1px solid black;
+    box-shadow: none;
+    background-color: lightskyblue;
+    cursor: pointer;
+}
+.add-button {
+    display: inline-block;
+}
+.alert {
+    margin: 1em;
+}
+.loading-spinner {
+    display: inline-block;
+    margin-left: 3em;
+}
+.icon-button {
+    cursor: pointer;
+}
+.deleteIcon {
+    color: #c4183c;
+}
+.editIcon {
+    color: #0067f4;
+}
+#table {
+    background-color: #d9f6d4;
+    padding: 1.5em;
+}
+td,
+th {
+    padding: 1em;
+}
+h2 {
+    margin: 0;
+}
+a {
+    color: darkblue;
+}
