@@ -123,7 +123,7 @@ class Add extends React.Component {
                 Global_Sales: globalSales,
             };
 
-            //The state is set in order to render
+            //The state is set in order to render the loading spinner.
             this.setState({ fetchInProgress: true });
 
             fetch("https://node-mongo-games.herokuapp.com/api/add", {

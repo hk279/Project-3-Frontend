@@ -5,6 +5,7 @@ import "shards-ui/dist/css/shards.min.css";
 import "../App.css";
 import { Button, FormInput, InputGroup, InputGroupAddon } from "shards-react";
 import List from "./list";
+import LoadingSpinner from "./loadingSpinner";
 
 class Search extends React.Component {
     constructor(props) {
@@ -12,6 +13,7 @@ class Search extends React.Component {
         this.state = {
             query: "",
             filteredData: [],
+            fetchInProgress: false,
         };
         this.clickHandler = this.clickHandler.bind(this);
         this.getData = this.getData.bind(this);
@@ -31,18 +33,26 @@ class Search extends React.Component {
         //Workaround to make setState work within the fetch function.
         var that = this;
 
+        //The state is set in order to render the loading spinner.
+        this.setState({ fetchInProgress: true });
+
         var data = fetch("https://node-mongo-games.herokuapp.com/api/getbyname/" + query)
             .then((response) => {
                 return response.json();
             })
             .then((responseJSON) => {
                 console.log(responseJSON);
-                that.setState({ filteredData: responseJSON });
+                that.setState({ filteredData: responseJSON, fetchInProgress: false });
                 return responseJSON;
             });
         return data;
     }
     render() {
+        var spinner = "";
+        if (this.state.fetchInProgress === true) {
+            spinner = <LoadingSpinner></LoadingSpinner>;
+        }
+
         return (
             <div>
                 <div id="intro">
@@ -68,6 +78,7 @@ class Search extends React.Component {
                         </Button>
                     </Link>
                 </div>
+                <div className="loading-spinner">{spinner}</div>
                 <div>
                     <List data={this.state.filteredData}></List>
                 </div>
