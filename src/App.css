@@ -3,10 +3,10 @@
 }
 #intro {
     background-color: #f1d4f6;
-    padding: 1.5em;
+    padding: 3em;
 }
 #search {
-    padding: 1.5em;
+    padding: 1.5em 3em;
     background: #f1d4f6;
     background: linear-gradient(180deg, rgba(241, 212, 246) 0%, rgba(217, 246, 212) 100%);
 }
@@ -55,7 +55,7 @@
 }
 #table {
     background-color: #d9f6d4;
-    padding: 1.5em;
+    padding: 0em 3em;
 }
 td,
 th {

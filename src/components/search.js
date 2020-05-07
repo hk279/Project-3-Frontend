@@ -79,7 +79,7 @@ class Search extends React.Component {
                     </Link>
                 </div>
                 <div className="loading-spinner">{spinner}</div>
-                <div>
+                <div id="list">
                     <List data={this.state.filteredData}></List>
                 </div>
             </div>
