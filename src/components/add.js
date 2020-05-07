@@ -1,5 +1,4 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import "../App.css";
 import { Link } from "react-router-dom";
 import { Button, FormInput, Form, FormGroup } from "shards-react";
@@ -34,6 +33,7 @@ class Add extends React.Component {
             },
             fetchInProgress: false,
             alertMessage: "",
+            status: "",
         };
         this.changeHandler = this.changeHandler.bind(this);
         this.isEntered = this.isEntered.bind(this);
@@ -41,12 +41,12 @@ class Add extends React.Component {
     }
 
     changeHandler(event) {
-        var name = event.target.id;
+        var fieldName = event.target.id;
         var newValue = event.target.value;
         var newValidState;
         var newInvalidState;
 
-        if (name === "Year" || name === "Global_Sales") {
+        if (fieldName === "Year" || fieldName === "Global_Sales") {
             newValidState = this.isNumber(newValue);
             if (newValidState === true) {
                 newInvalidState = false;
@@ -65,7 +65,7 @@ class Add extends React.Component {
         this.setState({
             formControl: {
                 ...this.state.formControl,
-                [name]: {
+                [fieldName]: {
                     value: newValue,
                     valid: newValidState,
                     invalid: newInvalidState,
@@ -100,21 +100,13 @@ class Add extends React.Component {
         var year = this.state.formControl.Year.value;
         var globalSales = this.state.formControl.Global_Sales.value;
 
-        //Resets the state of the alert message.
-        this.setState({ alertMessage: "" });
-
         if (name === "" || platform === "" || year === "" || globalSales === "") {
-            this.setState({ alertMessage: "Please fill all fields to submit data." });
-            ReactDOM.render(
-                <Alert alertText={this.state.alertMessage} status="error"></Alert>,
-                document.getElementsByClassName("alert")[0]
-            );
+            this.setState({ alertMessage: "Please fill all fields to submit data.", status: "error" });
         } else if (!this.isNumber(year) || !this.isNumber(globalSales)) {
-            this.setState({ alertMessage: "Year and Global Sales fields need to have a numerical value." });
-            ReactDOM.render(
-                <Alert alertText={this.state.alertMessage} status="error"></Alert>,
-                document.getElementsByClassName("alert")[0]
-            );
+            this.setState({
+                alertMessage: "Year and Global Sales fields need to have a numerical value.",
+                status: "error",
+            });
         } else {
             var newEntry = {
                 Name: name,
@@ -135,21 +127,17 @@ class Add extends React.Component {
             })
                 .catch((error) => {
                     console.error("Error:", error);
-                    this.setState({ alertMessage: "Fetch error" });
-                    ReactDOM.render(
-                        <Alert alertText={this.state.alertMessage} status="error"></Alert>,
-                        document.getElementsByClassName("alert")[0]
-                    );
+                    this.setState({ alertMessage: "Fetch error", status: "error", fetchInProgress: false });
                 })
                 .then((data) => {
                     console.log(data);
                 })
                 .then(() => {
-                    this.setState({ alertMessage: "Data saved successfully!", fetchInProgress: false });
-                    ReactDOM.render(
-                        <Alert alertText={this.state.alertMessage} status="success"></Alert>,
-                        document.getElementsByClassName("alert")[0]
-                    );
+                    this.setState({
+                        alertMessage: "Data saved successfully!",
+                        status: "success",
+                        fetchInProgress: false,
+                    });
                 });
         }
     }
@@ -158,6 +146,11 @@ class Add extends React.Component {
         var spinner = "";
         if (this.state.fetchInProgress === true) {
             spinner = <LoadingSpinner></LoadingSpinner>;
+        }
+
+        var alert = "";
+        if (this.state.alertMessage.length > 0) {
+            alert = <Alert alertText={this.state.alertMessage} status={this.state.status}></Alert>;
         }
 
         return (
@@ -222,7 +215,7 @@ class Add extends React.Component {
                     Submit
                 </Button>
                 <div className="loading-spinner">{spinner}</div>
-                <div className="alert"></div>
+                <div className="alert">{alert}</div>
                 <Link to="/">
                     <Button theme="secondary">Back to Search</Button>
                 </Link>
